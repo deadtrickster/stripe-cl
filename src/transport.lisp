@@ -8,13 +8,15 @@
   (let ((headers (if idempotency-key
                      `(("Stripe-Version" . "2016-03-07")
                        ("Idempotency-Key" . ,idempotency-key))
-                     '(("Stripe-Version" . "2016-03-07")))))
+                     '(("Stripe-Version" . "2016-03-07"))))
+        (query-params (when (member method '(:get :head :delete))
+                        (concatenate 'string "?" (encode-parameters params)))))
     (with-stripe-ssl-ctx *stripe*
       (multiple-value-bind (body status-code headers)
-          (drakma:http-request #?"https://api.strie.com/v1/${path}"
+          (drakma:http-request #?"https://api.stripe.com/v1/${path}${query-params}"
                                :basic-authorization (list (stripe-secret-key *stripe*) "")
                                :method method
-                               :content (encode-parameters params)
+                               :content (unless query-params (encode-parameters params))
                                :additional-headers headers)
         (if body
             (handler-case
