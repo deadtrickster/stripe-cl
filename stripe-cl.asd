@@ -2,7 +2,7 @@
   :serial t
   :version "0.0.1"
   :license "MIT"
-  :depends-on ("alexandria" "drakma" "ia-hash-table" "uuid" "log4cl")
+  :depends-on ("alexandria" "drakma" "cl-interpol" "ia-hash-table" "uuid" "log4cl")
   :author "Ilya Khaprov <ilya.khaprov@publitechs.com>"
   :components ((:module "src"
                 :serial t

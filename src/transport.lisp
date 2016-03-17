@@ -1,5 +1,7 @@
 (in-package :stripe)
 
+(cl-interpol:enable-interpol-syntax)
+
 (defmacro with-stripe-ssl-ctx (stripe &body body)
   `(cl+ssl:with-global-context ((stripe-ssl-ctx ,stripe))
      ,@body))
